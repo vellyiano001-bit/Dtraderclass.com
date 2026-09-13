@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gold Trader</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: #0b0f19;
+      color: white;
+      padding: 15px;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .logo {
+      font-size: 22px;
+      font-weight: bold;
+    }
+
+    .status {
+      font-size: 12px;
+      background: #172033;
+      padding: 7px 10px;
+      border-radius: 20px;
+    }
+
+    .card {
+      background: #121827;
+      border: 1px solid #222c40;
+      border-radius: 15px;
+      padding: 18px;
+      margin-bottom: 15px;
+    }
+
+    .pair {
+      font-size: 14px;
+      color: #9aa7bd;
+    }
+
+    .price {
+      font-size: 32px;
+      font-weight: bold;
+      margin: 8px 0;
+    }
+
+    .chart {
+      height: 250px;
+      background:
+        linear-gradient(rgba(255,255,255,.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.05) 1px, transparent 1px);
+      background-size: 40px 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #66748c;
+      margin-top: 15px;
+    }
+
+    .signal {
+      text-align: center;
+      padding: 18px;
+      border-radius: 12px;
+      background: #10271d;
+      border: 1px solid #1d6b45;
+    }
+
+    .buy {
+      color: #35d98b;
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    .levels {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 15px;
+    }
+
+    .level {
+      background: #0d1320;
+      padding: 13px;
+      border-radius: 10px;
+    }
+
+    .label {
+      color: #8c98ad;
+      font-size: 12px;
+    }
+
+    .value {
+      margin-top: 5px;
+      font-weight: bold;
+    }
+
+    .button {
+      width: 100%;
+      border: none;
+      padding: 14px;
+      margin-top: 15px;
+      border-radius: 10px;
+      background: #35d98b;
+      color: #06130d;
+      font-weight: bold;
+      font-size: 16px;
+    }
+
+    footer {
+      text-align: center;
+      color: #68758b;
+      font-size: 12px;
+      margin-top: 25px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <div class="logo">🪙 Gold Trader</div>
+    <div class="status">● Market Monitor</div>
+  </header>
+
+  <div class="card">
+    <div class="pair">XAUUSD · GOLD</div>
+    <div class="price" id="price">Loading...</div>
+
+    <div class="chart">
+      📈 XAUUSD CHART
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="signal">
+      <div class="label">CURRENT SIGNAL</div>
+      <div class="buy">BUY</div>
+      <div class="label">Example signal — not financial advice</div>
+    </div>
+
+    <div class="levels">
+
+      <div class="level">
+        <div class="label">ENTRY</div>
+        <div class="value" id="entry">2,500.00</div>
+      </div>
+
+      <div class="level">
+        <div class="label">STOP LOSS</div>
+        <div class="value">2,490.00</div>
+      </div>
+
+      <div class="level">
+        <div class="label">TAKE PROFIT 1</div>
+        <div class="value">2,515.00</div>
+      </div>
+
+      <div class="level">
+        <div class="label">TAKE PROFIT 2</div>
+        <div class="value">2,530.00</div>
+      </div>
+
+    </div>
+
+    <button class="button" onclick="showMessage()">
+      View Trading Plan
+    </button>
+  </div>
+
+  <div class="card">
+    <h3>🧮 Risk Management</h3>
+    <p style="color:#9aa7bd; margin-top:8px;">
+      Always use a Stop Loss and risk only a small percentage
+      of your trading account on each trade.
+    </p>
+  </div>
+
+  <footer>
+    Gold Trader © 2026 · Educational purposes only
+  </footer>
+
+  <script>
+    let price = 2500;
+
+    function updatePrice() {
+      price += (Math.random() - 0.5) * 2;
+
+      document.getElementById("price").textContent =
+        price.toFixed(2);
+
+      document.getElementById("entry").textContent =
+        price.toFixed(2);
+    }
+
+    function showMessage() {
+      alert(
+        "Trading plan: Wait for confirmation before entering. Always use Stop Loss."
+      );
+    }
+
+    updatePrice();
+    setInterval(updatePrice, 2000);
+  </script>
+
+</body>
+</html>

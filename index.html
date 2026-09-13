@@ -3,6 +3,382 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gold Trader Dashboard</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: #080c14;
+      color: #ffffff;
+      padding: 16px;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: auto;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .logo {
+      font-size: 22px;
+      font-weight: bold;
+    }
+
+    .logo span {
+      color: #f5c542;
+    }
+
+    .market-status {
+      background: #14251c;
+      color: #4ee58e;
+      padding: 7px 10px;
+      border-radius: 20px;
+      font-size: 12px;
+    }
+
+    .card {
+      background: #111725;
+      border: 1px solid #202a3c;
+      border-radius: 16px;
+      padding: 18px;
+      margin-bottom: 16px;
+    }
+
+    .pair {
+      color: #8996aa;
+      font-size: 13px;
+    }
+
+    .price {
+      font-size: 36px;
+      font-weight: bold;
+      margin: 8px 0;
+    }
+
+    .change {
+      color: #4ee58e;
+      font-size: 14px;
+    }
+
+    .chart {
+      height: 260px;
+      margin-top: 18px;
+      border-radius: 12px;
+      overflow: hidden;
+      position: relative;
+      background:
+        linear-gradient(rgba(255,255,255,.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.05) 1px, transparent 1px);
+      background-size: 40px 40px;
+    }
+
+    .chart-line {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 70px;
+      height: 100px;
+      border-top: 3px solid #4ee58e;
+      transform: skewY(-8deg);
+      opacity: .8;
+    }
+
+    .chart-label {
+      position: absolute;
+      bottom: 15px;
+      left: 15px;
+      color: #657289;
+      font-size: 12px;
+    }
+
+    .signal {
+      text-align: center;
+      padding: 20px;
+      border-radius: 13px;
+      background: #10251b;
+      border: 1px solid #1f6744;
+    }
+
+    .signal-title {
+      color: #8d9aaf;
+      font-size: 12px;
+    }
+
+    .buy {
+      color: #4ee58e;
+      font-size: 32px;
+      font-weight: bold;
+      margin: 7px;
+    }
+
+    .warning {
+      color: #9ca8ba;
+      font-size: 11px;
+    }
+
+    .levels {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin-top: 15px;
+    }
+
+    .level {
+      background: #0b101b;
+      padding: 14px;
+      border-radius: 10px;
+    }
+
+    .label {
+      color: #8996aa;
+      font-size: 11px;
+    }
+
+    .value {
+      margin-top: 6px;
+      font-weight: bold;
+    }
+
+    .calculator input {
+      width: 100%;
+      padding: 13px;
+      margin-top: 7px;
+      margin-bottom: 12px;
+      background: #0b101b;
+      border: 1px solid #273249;
+      border-radius: 9px;
+      color: white;
+      outline: none;
+    }
+
+    .button {
+      width: 100%;
+      padding: 14px;
+      border: none;
+      border-radius: 10px;
+      background: #f5c542;
+      color: #111;
+      font-weight: bold;
+      font-size: 15px;
+    }
+
+    .result {
+      margin-top: 14px;
+      padding: 13px;
+      background: #0b101b;
+      border-radius: 10px;
+      text-align: center;
+    }
+
+    footer {
+      text-align: center;
+      color: #647187;
+      font-size: 11px;
+      padding: 15px;
+    }
+
+    @media (max-width: 500px) {
+      .price {
+        font-size: 30px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <header>
+    <div class="logo">🪙 <span>Gold</span> Trader</div>
+    <div class="market-status">● DEMO</div>
+  </header>
+
+  <!-- MARKET -->
+  <div class="card">
+
+    <div class="pair">XAUUSD · GOLD</div>
+
+    <div class="price" id="price">
+      $2,500.00
+    </div>
+
+    <div class="change" id="change">
+      +0.00%
+    </div>
+
+    <div class="chart">
+      <div class="chart-line"></div>
+      <div class="chart-label">
+        XAUUSD · Demo chart
+      </div>
+    </div>
+
+  </div>
+
+  <!-- SIGNAL -->
+  <div class="card">
+
+    <div class="signal">
+
+      <div class="signal-title">
+        MARKET ANALYSIS
+      </div>
+
+      <div class="buy">
+        BUY
+      </div>
+
+      <div class="warning">
+        Demo signal — confirm market conditions before trading.
+      </div>
+
+    </div>
+
+    <div class="levels">
+
+      <div class="level">
+        <div class="label">ENTRY</div>
+        <div class="value" id="entry">
+          2500.00
+        </div>
+      </div>
+
+      <div class="level">
+        <div class="label">STOP LOSS</div>
+        <div class="value">
+          2490.00
+        </div>
+      </div>
+
+      <div class="level">
+        <div class="label">TAKE PROFIT 1</div>
+        <div class="value">
+          2515.00
+        </div>
+      </div>
+
+      <div class="level">
+        <div class="label">TAKE PROFIT 2</div>
+        <div class="value">
+          2530.00
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- RISK CALCULATOR -->
+  <div class="card calculator">
+
+    <h3>🧮 Risk Calculator</h3>
+
+    <br>
+
+    <label class="label">
+      Account Balance ($)
+    </label>
+
+    <input
+      type="number"
+      id="balance"
+      placeholder="Example: 10"
+      value="10"
+    >
+
+    <label class="label">
+      Risk Percentage (%)
+    </label>
+
+    <input
+      type="number"
+      id="risk"
+      placeholder="Example: 1"
+      value="1"
+    >
+
+    <button class="button" onclick="calculateRisk()">
+      Calculate Risk
+    </button>
+
+    <div class="result" id="result">
+      Maximum risk: $0.10
+    </div>
+
+  </div>
+
+  <footer>
+    Gold Trader © 2026<br><br>
+    Educational purposes only. Trading involves risk.
+  </footer>
+
+</div>
+
+<script>
+
+  let price = 2500;
+
+  function updatePrice() {
+
+    let movement = (Math.random() - 0.5) * 2;
+
+    price = price + movement;
+
+    document.getElementById("price").innerText =
+      "$" + price.toFixed(2);
+
+    document.getElementById("entry").innerText =
+      price.toFixed(2);
+
+    let percentage =
+      ((price - 2500) / 2500) * 100;
+
+    document.getElementById("change").innerText =
+      (percentage >= 0 ? "+" : "") +
+      percentage.toFixed(2) + "%";
+  }
+
+  function calculateRisk() {
+
+    let balance =
+      Number(document.getElementById("balance").value);
+
+    let risk =
+      Number(document.getElementById("risk").value);
+
+    let amount =
+      balance * (risk / 100);
+
+    document.getElementById("result").innerText =
+      "Maximum risk: $" + amount.toFixed(2);
+  }
+
+  calculateRisk();
+
+  setInterval(updatePrice, 2000);
+
+</script>
+
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Gold Trader</title>
 
   <style>
